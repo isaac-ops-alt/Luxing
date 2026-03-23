@@ -1071,6 +1071,55 @@ select option { background: var(--surface); color: var(--text-primary); }
 /* === WATCHES SECTION === */
 .watches-section { background: var(--black); }
 
+/* === PAGE MODALS (Lookbook, Sustainability, Sizing Guide, Contact) === */
+.page-overlay {
+  position: fixed; inset: 0; z-index: 2500;
+  background: rgba(0,0,0,0.92); backdrop-filter: blur(16px);
+  opacity: 0; pointer-events: none; transition: opacity 0.4s;
+  display: flex; align-items: flex-start; justify-content: center;
+  overflow-y: auto; padding: 60px 20px;
+}
+.page-overlay.open { opacity: 1; pointer-events: all; }
+.page-modal {
+  background: var(--charcoal); border: 1px solid var(--border);
+  max-width: 820px; width: 100%; position: relative;
+  transform: translateY(20px); transition: transform 0.5s var(--ease-out);
+}
+.page-overlay.open .page-modal { transform: translateY(0); }
+.page-modal-header {
+  padding: 40px 48px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.page-modal-title { font-family: var(--font-display); font-size: 2.4rem; font-weight: 300; color: var(--ivory); }
+.page-modal-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 1.1rem; cursor: pointer;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.page-modal-close:hover { background: rgba(255,255,255,0.1); color: var(--ivory); }
+.page-modal-body { padding: 40px 48px 56px; }
+.page-section-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; color: var(--ivory); margin: 28px 0 10px; }
+.page-section-title:first-child { margin-top: 0; }
+.page-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 16px; }
+.page-divider { height: 1px; background: var(--border); margin: 28px 0; }
+.size-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+.size-table th { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+.size-table td { font-size: 0.82rem; color: var(--text-secondary); padding: 10px 16px; border-bottom: 1px solid rgba(212,175,55,0.06); }
+.size-table tr:last-child td { border-bottom: none; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 600px) {
+  .page-modal-header { padding: 28px 24px 20px; }
+  .page-modal-body { padding: 28px 24px 40px; }
+}
+
+/* === CATEGORY CARD IMAGE === */
+.category-visual img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
 /* Nav wishlist count badge */
 #wishlistCount {
   position: absolute; top: 4px; right: 4px;
@@ -1219,14 +1268,9 @@ select option { background: var(--surface); color: var(--text-primary); }
       <p>Three categories. One aesthetic. Unmistakably LUXING.</p>
     </div>
     <div class="categories-grid reveal">
-      <div class="category-card cat-bg-chain" onclick="filterCategory('chains')">
+      <div class="category-card" onclick="filterCategory('chains')">
         <div class="category-visual">
-          <svg width="220" height="220" viewBox="0 0 220 220" class="cat-icon-large" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="110" cy="60" rx="30" ry="18" stroke="#d4af37" stroke-width="6"/>
-            <ellipse cx="110" cy="100" rx="30" ry="18" stroke="#d4af37" stroke-width="6"/>
-            <ellipse cx="110" cy="140" rx="30" ry="18" stroke="#d4af37" stroke-width="6"/>
-            <ellipse cx="110" cy="180" rx="30" ry="18" stroke="#d4af37" stroke-width="6"/>
-          </svg>
+          <img src="img/chainscollection.png" alt="Chains Collection">
         </div>
         <div class="category-overlay"></div>
         <div class="category-info">
@@ -1235,12 +1279,9 @@ select option { background: var(--surface); color: var(--text-primary); }
           <span class="category-cta">Shop Chains →</span>
         </div>
       </div>
-      <div class="category-card cat-bg-ring" onclick="filterCategory('rings')">
+      <div class="category-card" onclick="filterCategory('rings')">
         <div class="category-visual">
-          <svg width="160" height="160" viewBox="0 0 160 160" class="cat-icon-large" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="80" cy="80" r="52" stroke="#d4af37" stroke-width="6"/>
-            <circle cx="80" cy="80" r="36" stroke="#d4af37" stroke-width="3" stroke-dasharray="6 4"/>
-          </svg>
+          <img src="img/ringscollection.png" alt="Rings Collection">
         </div>
         <div class="category-overlay"></div>
         <div class="category-info">
@@ -1249,13 +1290,9 @@ select option { background: var(--surface); color: var(--text-primary); }
           <span class="category-cta">Shop Rings →</span>
         </div>
       </div>
-      <div class="category-card cat-bg-bracelet" onclick="filterCategory('bracelets')">
+      <div class="category-card" onclick="filterCategory('bracelets')">
         <div class="category-visual">
-          <svg width="160" height="160" viewBox="0 0 160 160" class="cat-icon-large" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 20 80 Q 40 30 80 20 Q 120 10 140 60" stroke="#d4af37" stroke-width="6" fill="none"/>
-            <circle cx="20" cy="80" r="7" fill="#d4af37"/>
-            <circle cx="140" cy="60" r="7" fill="#d4af37"/>
-          </svg>
+          <img src="img/braceletscollection.png" alt="Bracelets Collection">
         </div>
         <div class="category-overlay"></div>
         <div class="category-info">
@@ -1408,31 +1445,27 @@ select option { background: var(--surface); color: var(--text-primary); }
       <div class="footer-col">
         <h4>Shop</h4>
         <ul>
-          <li><a href="#">All Pieces</a></li>
-          <li><a href="#">Chains</a></li>
-          <li><a href="#">Rings</a></li>
-          <li><a href="#">Bracelets</a></li>
-          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#shop">All Pieces</a></li>
+          <li><a href="#shop" onclick="filterCategory('chains')">Chains</a></li>
+          <li><a href="#shop" onclick="filterCategory('rings')">Rings</a></li>
+          <li><a href="#shop" onclick="filterCategory('bracelets')">Bracelets</a></li>
+          <li><a href="#shop" onclick="filterCategory('watches')">Watches</a></li>
+          <li><a href="#featured">New Arrivals</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Support</h4>
         <ul>
-          <li><a href="#">Sizing Guide</a></li>
-          <li><a href="#">Returns Policy</a></li>
-          <li><a href="#">Shipping Info</a></li>
-          <li><a href="#">Track Order</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="#" onclick="openPage('sizingGuide'); return false;">Sizing Guide</a></li>
+          <li><a href="#" onclick="openPage('contact'); return false;">Contact Us</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Brand</h4>
         <ul>
-          <li><a href="#">Our Story</a></li>
-          <li><a href="#">Lookbook</a></li>
-          <li><a href="#">Sustainability</a></li>
-          <li><a href="#">Collaborations</a></li>
-          <li><a href="#">Press</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#" onclick="openPage('lookbook'); return false;">Lookbook</a></li>
+          <li><a href="#" onclick="openPage('sustainability'); return false;">Sustainability</a></li>
         </ul>
       </div>
     </div>
@@ -1455,6 +1488,19 @@ select option { background: var(--surface); color: var(--text-primary); }
     </div>
   </div>
 </footer>
+
+<!-- =============================================
+   PAGE OVERLAY (Lookbook / Sustainability / Sizing / Contact)
+   ============================================= -->
+<div class="page-overlay" id="pageOverlay" onclick="closePageOnOverlay(event)">
+  <div class="page-modal">
+    <div class="page-modal-header">
+      <span class="page-modal-title" id="pageModalTitle"></span>
+      <button class="page-modal-close" onclick="closePage()">✕</button>
+    </div>
+    <div class="page-modal-body" id="pageModalBody"></div>
+  </div>
+</div>
 
 <!-- =============================================
    PRODUCT MODAL
@@ -2689,6 +2735,149 @@ function observeReveal() {
   document.querySelectorAll('.reveal').forEach(el => {
     if (!el.classList.contains('visible')) observer.observe(el);
   });
+}
+
+/* =============================================
+   PAGE MODALS
+   ============================================= */
+const PAGE_CONTENT = {
+  lookbook: {
+    title: 'Lookbook',
+    body: `
+      <p class="page-text">The LUXING Lookbook is your visual guide to how our pieces come alive in the real world — styled, stacked, and worn with intention.</p>
+      <p class="page-text">From minimal single-ring setups to layered chain combinations, every look here is a testament to the versatility of our collection. LUXING pieces are designed to speak for themselves — and louder when combined.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">How to Stack Chains</div>
+      <p class="page-text">Layer the Obsidian Cuban Chain with the Aurora Gold Chain for a two-tone contrast that turns heads. The weight difference between the two creates a natural depth that reads as intentional, not accidental.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">The Ring Stack</div>
+      <p class="page-text">Pair the Eclipse Ring with the Titan Steel Ring on adjacent fingers for a clean, architectural look. Add the Vertex Band on the opposite hand to balance without mirroring.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">The Watch & Bracelet Rule</div>
+      <p class="page-text">Wear your Bulgarie or Poedagar watch on one wrist and the Luxe Minimal Bracelet or Phantom Link on the other. Let the watch be the focal point — let the bracelet be the punctuation.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">The Minimal Edit</div>
+      <p class="page-text">Not every outfit needs the full stack. A single Vertex Band Ring or a lone Aurora Chain worn alone is often the strongest statement. Restraint, when deliberate, is its own kind of power.</p>
+    `
+  },
+  sustainability: {
+    title: 'Sustainability',
+    body: `
+      <p class="page-text">At LUXING, sustainability is not a marketing term. It is the baseline from which every design decision is made.</p>
+      <div class="page-section-title">Built to Last</div>
+      <p class="page-text">The most sustainable piece of jewellery is one that doesn't need to be replaced. Every LUXING product is built from 316L surgical-grade stainless steel, IP-plated finishes, and anti-tarnish coatings designed to hold their integrity for years — not seasons. We don't do disposable.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Materials</div>
+      <p class="page-text">We source our metals from certified suppliers who meet environmental and ethical standards. Our stainless steel is entirely recyclable. Our gold-tone plating uses no cadmium or lead. We are in the process of transitioning our packaging to 100% recyclable materials.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Packaging</div>
+      <p class="page-text">Our jewellery boxes are made from recycled board and printed with soy-based inks. We ship without single-use plastic wherever possible. Small changes, compounded over thousands of orders, make a measurable difference.</p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Our Commitment</div>
+      <p class="page-text">We are a brand in motion. We commit to publishing an annual sustainability report starting 2026, tracking our carbon footprint, material sourcing, and packaging waste. Transparency is owed, not optional.</p>
+    `
+  },
+  sizingGuide: {
+    title: 'Sizing Guide',
+    body: `
+      <p class="page-text">Getting the right fit makes all the difference. Use this guide to find your size before ordering. Still unsure? Reach us on Instagram <a href="https://www.instagram.com/luxing._cmr?igsh=MTN2aHlwOXQzMnJ4bA==" target="_blank" style="color:var(--gold);">@luxing._cmr</a>.</p>
+      <div class="page-section-title">Ring Sizing</div>
+      <p class="page-text">Wrap a thin strip of paper around your finger, mark where it overlaps, then measure the length in mm. Match to the table below.</p>
+      <table class="size-table">
+        <thead><tr><th>UK Size</th><th>US Size</th><th>Circumference (mm)</th><th>Diameter (mm)</th></tr></thead>
+        <tbody>
+          <tr><td>J</td><td>5</td><td>49.3</td><td>15.7</td></tr>
+          <tr><td>L</td><td>6</td><td>51.9</td><td>16.5</td></tr>
+          <tr><td>N</td><td>7</td><td>54.4</td><td>17.3</td></tr>
+          <tr><td>P</td><td>8</td><td>57.0</td><td>18.1</td></tr>
+          <tr><td>R</td><td>9</td><td>59.5</td><td>18.9</td></tr>
+          <tr><td>T</td><td>10</td><td>62.1</td><td>19.8</td></tr>
+          <tr><td>V</td><td>11</td><td>64.6</td><td>20.6</td></tr>
+          <tr><td>X</td><td>12</td><td>67.2</td><td>21.4</td></tr>
+          <tr><td>Z</td><td>13</td><td>69.7</td><td>22.2</td></tr>
+        </tbody>
+      </table>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Chain Lengths</div>
+      <table class="size-table">
+        <thead><tr><th>Length</th><th>Sits At</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td>16"</td><td>Collarbone</td><td>Delicate layering, fine chains</td></tr>
+          <tr><td>18"</td><td>Below collarbone</td><td>Most versatile — suits all builds</td></tr>
+          <tr><td>20"</td><td>Mid-chest</td><td>Layering, pendants</td></tr>
+          <tr><td>22"</td><td>Lower chest</td><td>Statement chains, Cuban links</td></tr>
+          <tr><td>24"</td><td>Upper stomach</td><td>Long chains, figaro styles</td></tr>
+        </tbody>
+      </table>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Bracelet Sizing</div>
+      <p class="page-text">Measure your wrist circumference. Add 1–2 cm for a comfortable fit.</p>
+      <table class="size-table">
+        <thead><tr><th>Wrist (cm)</th><th>Recommended Size</th></tr></thead>
+        <tbody>
+          <tr><td>14–16 cm</td><td>Small</td></tr>
+          <tr><td>16–18 cm</td><td>Medium</td></tr>
+          <tr><td>18–20 cm</td><td>Large</td></tr>
+          <tr><td>20–22 cm</td><td>X-Large</td></tr>
+        </tbody>
+      </table>
+    `
+  },
+  contact: {
+    title: 'Contact Us',
+    body: `
+      <p class="page-text">We're a small team with high standards. If you have a question about your order, want to know more about a piece, or just want to reach out — we're listening.</p>
+      <div class="page-section-title">Instagram</div>
+      <p class="page-text">The fastest way to reach us. DM us and we'll respond within 24 hours.</p>
+      <p class="page-text"><a href="https://www.instagram.com/luxing._cmr?igsh=MTN2aHlwOXQzMnJ4bA==" target="_blank" rel="noopener" style="color:var(--gold);letter-spacing:0.05em;font-weight:500;">@luxing._cmr →</a></p>
+      <div class="page-divider"></div>
+      <div class="page-section-title">Send a Message</div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Your name" id="contactName">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="your@email.com" id="contactEmail">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-input" rows="5" placeholder="Your message..." id="contactMessage" style="resize:vertical;"></textarea>
+        </div>
+        <button class="btn btn-gold" onclick="submitContact()" style="align-self:flex-start;margin-top:4px;">Send Message</button>
+      </div>
+    `
+  }
+};
+
+function openPage(pageKey) {
+  const page = PAGE_CONTENT[pageKey];
+  if (!page) return;
+  document.getElementById('pageModalTitle').textContent = page.title;
+  document.getElementById('pageModalBody').innerHTML = page.body;
+  document.getElementById('pageOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePage() {
+  document.getElementById('pageOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closePageOnOverlay(event) {
+  if (event.target === document.getElementById('pageOverlay')) closePage();
+}
+
+function submitContact() {
+  const name = document.getElementById('contactName')?.value?.trim();
+  const email = document.getElementById('contactEmail')?.value?.trim();
+  const msg = document.getElementById('contactMessage')?.value?.trim();
+  if (!name || !email || !msg) { showToast('Please fill in all fields'); return; }
+  showToast('Message received. We\'ll be in touch shortly.');
+  document.getElementById('contactName').value = '';
+  document.getElementById('contactEmail').value = '';
+  document.getElementById('contactMessage').value = '';
 }
 
 /* =============================================
